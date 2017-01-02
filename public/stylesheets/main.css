@@ -52,5 +52,7 @@ h1 {
   display: -ms-flexbox;
   display: flex;
   height: 100vh; }
+  .flexBody * {
+    margin: auto; }
 
 /*# sourceMappingURL=main.css.map */

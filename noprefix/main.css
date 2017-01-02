@@ -34,5 +34,7 @@ h1 {
 .flexBody {
   display: flex;
   height: 100vh; }
+  .flexBody * {
+    margin: auto; }
 
 /*# sourceMappingURL=main.css.map */

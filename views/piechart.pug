@@ -1,14 +1,14 @@
 doctype html
 html
   head
-    link(rel="stylesheet" href="/chartist.min.css" type="text/css")
+    link(rel="stylesheet" href="/chartist.min.css")
+    link(rel="stylesheet" href="/stylesheets/main.css")
     script(src='/chartist.min.js')
 
-  body
-    - console.log(server.data)
+  body.flexBody
    
     div(class="ct-chart ct-perfect-square")
-    - 
+
     script.
       var data = !{JSON.stringify(server.results[server.currentQuestion])}
       console.log(data)
@@ -21,3 +21,4 @@ html
       });
 
     
+//Try to use just a js file and a placeholder in other templates
