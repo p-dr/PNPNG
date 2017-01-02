@@ -1,0 +1,18 @@
+//- student.pug
+doctype html
+html
+
+  head
+    title PNPNG - Student's Page
+
+  body
+    h1 #{question}
+    
+    form(action='/getanswer')
+
+      each alternative in alternatives
+        input(type='radio' name='choice' value=alternative id=alternative style='display: none')
+        label(for=alternative) #{alternative}
+        br
+
+    input(type='submit' value='SUBMIT')

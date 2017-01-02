@@ -1,0 +1,19 @@
+//- teacher.pug
+doctype html
+html
+  head
+    title Teacher's Environment
+    script(src='../teacher.js') //may be explicit
+
+  body
+    p Hallo, teeeacher...
+ 
+
+    button(onclick='sendQuestion()') SEND
+    
+    each asw, question in server.questions
+      br
+      input(name='questionChooser' type='radio' value=question)
+      label= question
+    
+    h1= address

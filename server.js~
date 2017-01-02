@@ -1,0 +1,116 @@
+ //server.js
+
+
+const fs = require('fs'),// realy need?
+
+      express = require('express'), // rm?
+      server = express(),//server = express app
+      port = 3000,
+
+      electron = require('electron'), //rm?
+      {app, BrowserWindow} = electron,
+      
+      locals = {server: exports, address: `${getInet()}:${port}`}, //does not need exports anymore
+      pug = require('electron-pug')({preety: true}, locals)
+
+      
+
+var questions = null,
+    answers = {},//so many globals...
+    answerers = []
+
+server.set('view engine', 'pug');
+
+function shuffle(a) {
+    for (let i = a.length; i; i--) {
+        let j = Math.floor(Math.random() * i);
+        [a[i - 1], a[j]] = [a[j], a[i - 1]];
+    }
+    return(a);
+}
+
+exports.currentQuestion = ''
+exports.data = {labels:[], series:[]}
+
+
+
+function getInet(){//Please, generalize
+    let ifaces = require('os').networkInterfaces()
+    for (iface in ifaces) {
+        for (i in ifaces[iface]) {
+            var ret = ifaces[iface][i].address
+            if (ret.indexOf('192') === 0) return ret
+        }
+    }
+
+}
+
+// windows ===========================================================
+
+app.on('ready', () => {
+    win = new BrowserWindow()
+    win.loadURL(`file://${__dirname}/views/teacher.pug`) // use path?
+    fs.readFile('questions.json', (err, data) => {
+        if (err) throw err
+        exports.questions = JSON.parse(data)
+    })
+})
+
+app.on('window-all-closed', () => {//update questions.json
+  app.quit()
+})
+
+// routes =============================================================
+
+server.use(express.static('public'))
+
+server.get('/', (req, res) => {
+    if (!exports.currentQuestion) res.end('Wait for the teacher.');//end or send?
+    if (answerers.indexOf(req.ip) !== -1) {
+        res.end("You have already answered.");
+        
+    }
+    else res.render('student', {
+        "question": exports.currentQuestion,
+        "alternatives": shuffle(exports.questions[exports.currentQuestion])
+    });
+
+});
+
+// you'd better use POST here bellow, come back after
+server.get('/getanswer', (req, res) => {
+    var choice = req.query.choice; //mixed answers when current is chaged
+    if (exports.data.labels.indexOf(choice) === -1) {
+        exports.data.labels.push(choice);
+        exports.data.series.push(1)
+        console.log(exports.data)
+    }
+    
+    else {
+        exports.data.series[exports.data.labels.indexOf(choice)] += 1
+        console.log(exports.data)
+    }
+    res.end('Your answer was registered.');
+    /*
+      if (!answers[choice]) answers[choice] = 0;
+      answers[choice] += 1;
+      
+      res.end('Your answer was registered.');
+      console.log(answers);*/
+    
+    answerers.push(req.ip);
+    console.log(answerers);
+});
+
+server.get('/chart', (req, res) => {
+    res.render('piechart', locals)
+
+})
+
+
+var listener = server.listen(port, function() {
+    var adr = listener.address()
+    console.log(`Running server on http://${adr.address}:${adr.port}`);
+    console.log(getInet())
+    
+});

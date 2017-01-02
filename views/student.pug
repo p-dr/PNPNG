@@ -1,0 +1,19 @@
+//- student.pug
+doctype html
+html
+
+  head
+    title PNPNG - Student's Page
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')/
+    link(rel="stylesheet" href='/stylesheets/main.css')/
+ 
+  body
+    h1 #{question}
+    
+    form#chooser(action='/getanswer' method='POST')
+      
+      each alternative in alternatives
+        input(type='radio' name='choice' value=alternative id=alternative style='display: none')
+        label(for=alternative)
+          p= alternative
+          input(type='submit' value='SUBMIT')

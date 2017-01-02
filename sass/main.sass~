@@ -1,0 +1,36 @@
+#chooser
+  display: flex
+  flex-direction: column
+  height: 200px
+  width: 100%
+  
+  label
+    cursor: pointer
+    display: flex
+    border: 1px solid black
+    transition: .5s
+    flex: 1
+
+    p
+      transition: .5s
+      margin: auto
+
+    input 
+      transition: .5s
+      display: none
+      
+  label:hover
+    flex: 1.3
+    
+  input:checked + label
+    background: #0ff
+    flex: 2
+
+    input
+      display: block
+h1
+  color: #00f
+
+.flexBody
+  display: flex
+  height: 100vh

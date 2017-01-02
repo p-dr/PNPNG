@@ -1,0 +1,17 @@
+{
+  "name": "pnpng",
+  "version": "1.0.0",
+  "description": "PNPNG's not PNG nor Grossi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "pdro",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.4.13",
+    "express": "^4.14.0",
+    "lodash": "^4.17.2",
+    "pug": "^2.0.0-beta6"
+  }
+}

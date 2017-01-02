@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    link(rel="stylesheet" href="/chartist.min.css" type="text/css")
+    script(src='/chartist.min.js')
+
+  body
+    - console.log(server.data)
+   
+    div(class="ct-chart ct-perfect-square")
+    - 
+    script.
+      var data = !{JSON.stringify(server.data)}
+      console.log(data)
+      var sum = function(a, b) { return a + b };
+
+      new Chartist.Pie('.ct-chart', data, {
+      labelInterpolationFnc: function(value) {
+      return value;
+      }
+      });
+
+    

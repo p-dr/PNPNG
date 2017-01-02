@@ -1,0 +1,26 @@
+//- teacher.pug
+doctype html
+html
+  head
+    title Teacher's Environment
+    script(src='../teacher.js'): //should be explicit
+    link(rel='stylesheet' href='../public/stylesheets/main.css')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+
+  body
+    p Hallo, teeeacher...
+ 
+    #chooser
+      each asw, question in server.questions
+        br
+        input(id=question name='questionChooser' type='radio' value=question)
+        label(for=question): p= question
+
+
+    button(onclick='sendQuestion()') SEND
+    h3= "Inet address: " + address
+
+//show currentQuestion somewhere
+//toggle chart visibility
+//end answer gathering
+//show correct alterntive
